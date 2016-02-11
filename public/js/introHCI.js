@@ -11,6 +11,7 @@ $(document).ready(function() {
 function initializePage() {
 	$('.project a').click(addProjectDetails);
 
+
 	$('#colorBtn').click(randomizeColors);
 }
 
@@ -25,8 +26,26 @@ function addProjectDetails(e) {
 	var projectID = $(this).closest('.project').attr('id');
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
+	var url = "/project/" +idNumber;
+	$.get(url, addProject)
+	console.log(url)
 
 	console.log("User clicked on project " + idNumber);
+}
+function addProject(result) {
+
+	console.log(result);
+	var projectHTML = '<a href="#" class = "thumbnail">'+
+	'<img src ="'+ result['image'] + '"class = "detailsImage">' +
+	'<p>' + result['title'] + '</p>'+
+	'<p><small>' + result['date'] + '</small></p></a>';
+
+
+	var divID = "#project" + result.id;
+
+	$(divID + " .details").html(projectHTML + result['summary']);
+
+
 }
 
 /*
